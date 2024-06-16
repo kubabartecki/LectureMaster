@@ -11,6 +11,7 @@
 
   <modules>
     <module>question</module>
+    <module>quiz</module>
   </modules>
 
   <name>LectureMaster</name>
