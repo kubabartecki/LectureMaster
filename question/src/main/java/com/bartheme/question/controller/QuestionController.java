@@ -1,6 +1,8 @@
 package com.bartheme.question.controller;
 
 import com.bartheme.question.model.Question;
+import com.bartheme.question.model.QuestionLatent;
+import com.bartheme.question.model.QuestionResponse;
 import com.bartheme.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,5 +29,23 @@ public class QuestionController {
     @PostMapping
     public ResponseEntity<String> addQuestion(@RequestBody Question question) {
         return questionService.addQuestion(question);
+    }
+
+    // for quiz microservice
+
+    @GetMapping("generate")
+    public ResponseEntity<List<Integer>> generateQuestionsForQuiz
+            (@RequestParam String category, @RequestParam Integer numQuestions) {
+        return questionService.generateQuestionsForQuiz(category, numQuestions);
+    }
+
+    @PostMapping("getQuestions")
+    public ResponseEntity<List<QuestionLatent>> getQuestionsForQuiz(@RequestBody List<Integer> questionIds) {
+        return questionService.getQuestionsFromId(questionIds);
+    }
+
+    @PostMapping("score")
+    public ResponseEntity<Integer> getScore(@RequestBody List<QuestionResponse> responses) {
+        return questionService.getScore(responses);
     }
 }
