@@ -1,5 +1,6 @@
 package com.bartheme.user.controller;
 
+import com.bartheme.user.model.ApplicationUserDto;
 import com.bartheme.user.model.User;
 import com.bartheme.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/user")
@@ -22,9 +24,16 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<User> getUserByUserName(@RequestParam String username) {
+    public ResponseEntity<User> getUserByUsername(@RequestParam String username) {
         User userByUsername = userService.getUserByUsername(username);
         return ResponseEntity.ok(userByUsername);
+    }
+
+    @GetMapping("get")
+    public Optional<ApplicationUserDto> getApplicationUserDtoByUsername(@RequestParam String username) {
+        Optional<ApplicationUserDto> userByUsername =
+                Optional.ofNullable(userService.getApplicationUserDtoByUsername(username));
+        return userByUsername;
     }
 
     @PostMapping("add")
