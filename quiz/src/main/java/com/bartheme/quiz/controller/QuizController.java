@@ -6,6 +6,7 @@ import com.bartheme.quiz.model.QuizDto;
 import com.bartheme.quiz.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,16 +17,19 @@ import java.util.List;
 public class QuizController {
     private final QuizService quizService;
 
+    @PreAuthorize("hasAuthority('lecture:write')")
     @PostMapping("create")
     public ResponseEntity<String> createQuiz(@RequestBody QuizDto quizDto) {
         return quizService.createQuiz(quizDto.getTitle(), quizDto.getCategoryName(), quizDto.getNumQuestions());
     }
 
+    @PreAuthorize("hasAuthority('student:read')")
     @GetMapping("{id}")
     public ResponseEntity<List<QuestionLatent>> getQuizQuestions(@PathVariable Integer id) {
         return quizService.getQuizQuestions(id);
     }
 
+    @PreAuthorize("hasAuthority('student:read')")
     @PostMapping("submit")
     public ResponseEntity<Integer> scoreQuiz(@RequestBody List<QuestionResponse> responses) {
         return quizService.scoreQuiz(responses);
