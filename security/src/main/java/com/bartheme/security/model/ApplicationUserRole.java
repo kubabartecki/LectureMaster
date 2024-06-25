@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 import static com.bartheme.security.model.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
-    STUDENT(new HashSet<>()),
-    TEACHER(new HashSet<>(Arrays.asList(LECTURE_READ, LECTURE_WRITE, STUDENT_READ, STUDENT_WRITE)));
+    STUDENT(new HashSet<>(Arrays.asList(STUDENT_READ, STUDENT_WRITE))),
+    TEACHER(new HashSet<>(Arrays.asList(LECTURE_READ, LECTURE_WRITE, STUDENT_READ, STUDENT_WRITE))),
+    ADMIN(new HashSet<>(Arrays.asList(LECTURE_READ, LECTURE_WRITE, STUDENT_READ, STUDENT_WRITE, ADMIN_READ, ADMIN_WRITE)));
 
     private final Set<ApplicationUserPermission> permissions;
 
