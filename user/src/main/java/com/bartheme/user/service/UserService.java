@@ -1,5 +1,6 @@
 package com.bartheme.user.service;
 
+import com.bartheme.user.model.ApplicationUserDto;
 import com.bartheme.user.model.User;
 import com.bartheme.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -63,5 +64,18 @@ public class UserService {
         }
         userRepository.deleteById(id);
         return true;
+    }
+
+    public ApplicationUserDto getApplicationUserDtoByUsername(
+            String username) {
+        User user = getUserByUsername(username);
+        if (user == null) {
+            return null;
+        }
+        ApplicationUserDto authenticationRequest = new ApplicationUserDto();
+        authenticationRequest.setUsername(user.getUsername());
+        authenticationRequest.setPassword(user.getPassword());
+        authenticationRequest.setRole(user.getRole());
+        return authenticationRequest;
     }
 }
