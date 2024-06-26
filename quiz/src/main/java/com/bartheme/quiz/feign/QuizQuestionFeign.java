@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @FeignClient("QUESTION")
-public interface QuizFeign {
+public interface QuizQuestionFeign {
     @GetMapping("api/v1/question/generate")
     public ResponseEntity<List<Integer>> generateQuestionsForQuiz
             (@RequestParam String category, @RequestParam Integer numQuestions);
