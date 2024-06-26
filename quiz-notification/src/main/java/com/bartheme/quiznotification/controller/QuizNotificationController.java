@@ -1,7 +1,7 @@
 package com.bartheme.quiznotification.controller;
 
 import com.bartheme.quiznotification.model.QuizNotification;
-import com.bartheme.quiznotification.service.QuizNotificationService;
+import com.bartheme.quiznotification.service.kafka.QuizNotificationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
