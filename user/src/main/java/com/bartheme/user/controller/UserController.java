@@ -74,7 +74,6 @@ public class UserController {
             System.out.println("id" + id);
             return Optional.ofNullable(userService.getUserDtoById(id));
         }
-        System.out.println("username" + username);
         if (username.isEmpty()) {
             throw new IllegalArgumentException("username is empty");
         }
