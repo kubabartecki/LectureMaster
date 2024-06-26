@@ -2,6 +2,7 @@ package com.bartheme.user.service;
 
 import com.bartheme.user.model.ApplicationUserDto;
 import com.bartheme.user.model.User;
+import com.bartheme.user.model.UserDto;
 import com.bartheme.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -77,5 +78,28 @@ public class UserService {
         authenticationRequest.setPassword(user.getPassword());
         authenticationRequest.setRole(user.getRole());
         return authenticationRequest;
+    }
+
+    public UserDto getUserDtoById(Integer id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        return getUserDtoFromUserOptional(userOptional);
+    }
+
+    public UserDto getUserDtoByUsername(String username) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        return getUserDtoFromUserOptional(userOptional);
+    }
+
+    private UserDto getUserDtoFromUserOptional(Optional<User> userOptional) {
+        if (userOptional.isEmpty()) {
+            return null;
+        }
+        User user = userOptional.get();
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setEmail(user.getEmail());
+        return userDto;
     }
 }
