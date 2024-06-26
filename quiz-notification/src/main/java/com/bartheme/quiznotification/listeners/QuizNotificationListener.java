@@ -2,7 +2,6 @@ package com.bartheme.quiznotification.listeners;
 
 import com.bartheme.quiznotification.model.QuizNotification;
 import com.bartheme.quiznotification.service.QuizNotificationService;
-import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
-@Profile("production")
 @Slf4j
 public class QuizNotificationListener {
 
@@ -27,7 +25,7 @@ public class QuizNotificationListener {
         this.quizNotificationService = quizNotificationService;
     }
 
-    @KafkaListener(topics = "quiz-result.published")
+    @KafkaListener(topics = "quiz-result.published", groupId = "quiz-notification")
     public String listens(final String in) {
         log.info("Received Notification: {}", in);
         try {
@@ -35,7 +33,7 @@ public class QuizNotificationListener {
 
             final QuizNotification savedNotification = quizNotificationService.save(notification);
 
-            log.info("Notification '{}' persisted!", savedNotification.getTimestamp().toString());
+            log.info("Notification '{}' persisted!", savedNotification.getSentAt().toString());
 
         } catch(final JsonProcessingException ex) {
             log.error("Invalid message received: {}", in);

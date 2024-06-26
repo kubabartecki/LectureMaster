@@ -24,9 +24,6 @@ public class QuizNotification {
             generator = "quiz_notification_id_sequence"
     )
     private Integer id;
-    //    private String message;
-    private LocalDateTime timestamp;
-
     private String emailTitle;
     private String quizTitle;
     private Integer score;
