@@ -1,7 +1,8 @@
-package com.bartheme.quiznotification.service;
+package com.bartheme.quiznotification.service.kafka;
 
 import com.bartheme.quiznotification.model.QuizNotification;
 import com.bartheme.quiznotification.repository.QuizNotificationRepository;
+import com.bartheme.quiznotification.service.NotificationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

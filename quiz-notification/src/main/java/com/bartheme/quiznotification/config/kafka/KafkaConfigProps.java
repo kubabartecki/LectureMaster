@@ -1,4 +1,4 @@
-package com.bartheme.quiznotification.config;
+package com.bartheme.quiznotification.config.kafka;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

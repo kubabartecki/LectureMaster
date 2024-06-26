@@ -1,4 +1,4 @@
-package com.bartheme.quiznotification.config;
+package com.bartheme.quiznotification.config.kafka;
 
 import java.text.SimpleDateFormat;
 

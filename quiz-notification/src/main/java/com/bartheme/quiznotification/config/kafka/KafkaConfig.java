@@ -1,4 +1,4 @@
-package com.bartheme.quiznotification.config;
+package com.bartheme.quiznotification.config.kafka;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
