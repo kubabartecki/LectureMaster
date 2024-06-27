@@ -19,6 +19,7 @@ public class Quiz {
     )
     private Integer id;
     private String title;
+    private Integer creatorId;
 
     @ElementCollection
     private List<Integer> questionIds;

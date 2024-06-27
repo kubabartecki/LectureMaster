@@ -2,6 +2,7 @@ package com.bartheme.quiz.controller;
 
 import com.bartheme.quiz.model.QuestionLatent;
 import com.bartheme.quiz.model.QuestionResponse;
+import com.bartheme.quiz.model.Quiz;
 import com.bartheme.quiz.model.QuizDto;
 import com.bartheme.quiz.service.QuizService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class QuizController {
 
     @PreAuthorize("hasAuthority('lecture:write')")
     @PostMapping("create")
-    public ResponseEntity<String> createQuiz(@RequestBody QuizDto quizDto) {
+    public ResponseEntity<Quiz> createQuiz(@RequestBody QuizDto quizDto) {
         return quizService.createQuiz(quizDto.getTitle(), quizDto.getCategoryName(), quizDto.getNumQuestions());
     }
 
@@ -30,8 +31,8 @@ public class QuizController {
     }
 
     @PreAuthorize("hasAuthority('student:read')")
-    @PostMapping("submit")
-    public ResponseEntity<Integer> scoreQuiz(@RequestBody List<QuestionResponse> responses) {
-        return quizService.scoreQuiz(responses);
+    @PostMapping("submit/{quizId}")
+    public ResponseEntity<Integer> scoreQuiz(@RequestBody List<QuestionResponse> responses, @PathVariable Integer quizId) {
+        return quizService.scoreQuiz(responses, quizId);
     }
 }

@@ -2,6 +2,7 @@ package com.bartheme.user.controller;
 
 import com.bartheme.user.model.ApplicationUserDto;
 import com.bartheme.user.model.User;
+import com.bartheme.user.model.UserDto;
 import com.bartheme.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +62,21 @@ public class UserController {
         Optional<ApplicationUserDto> userByUsername =
                 Optional.ofNullable(userService.getApplicationUserDtoByUsername(username));
         return userByUsername;
+    }
+
+    @GetMapping("get/details")
+    public Optional<UserDto> getUserDtoByIdOrUsername(@RequestParam(required = false) Integer id,
+                                            @RequestParam(required = false) String username) {
+        if (id == null && username == null) {
+            return Optional.empty();
+        }
+        if (id != null) {
+            System.out.println("id" + id);
+            return Optional.ofNullable(userService.getUserDtoById(id));
+        }
+        if (username.isEmpty()) {
+            throw new IllegalArgumentException("username is empty");
+        }
+        return Optional.ofNullable(userService.getUserDtoByUsername(username));
     }
 }
