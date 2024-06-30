@@ -90,6 +90,17 @@ public class UserService {
         return getUserDtoFromUserOptional(userOptional);
     }
 
+    public User createStudent(String username, String password, String email, String firstName, String lastName) {
+        User student = new User();
+        student.setUsername(username);
+        student.setPassword(password);
+        student.setEmail(email);
+        student.setFirstName(firstName);
+        student.setLastName(lastName);
+        student.setRole("STUDENT");
+        return addUser(student);
+    }
+
     private UserDto getUserDtoFromUserOptional(Optional<User> userOptional) {
         if (userOptional.isEmpty()) {
             return null;
@@ -100,6 +111,8 @@ public class UserService {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setEmail(user.getEmail());
+        userDto.setUsername(user.getUsername());
         return userDto;
     }
+
 }

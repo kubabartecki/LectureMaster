@@ -79,4 +79,14 @@ public class UserController {
         }
         return Optional.ofNullable(userService.getUserDtoByUsername(username));
     }
+
+    @PostMapping("add/student")
+    public ResponseEntity<String> addStudent(@RequestParam String username,
+                                        @RequestParam String password,
+                                        @RequestParam String email,
+                                        @RequestParam String firstName,
+                                        @RequestParam String lastName) {
+        userService.createStudent(username, password, email, firstName, lastName);
+        return ResponseEntity.ok("Student added successfully");
+    }
 }

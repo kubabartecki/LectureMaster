@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -77,5 +78,9 @@ public class QuestionService {
             }
         }
         return new ResponseEntity<>(score, HttpStatus.OK);
+    }
+
+    public Set<String> getAllCategories() {
+        return questionRepository.findAllCategories();
     }
 }
