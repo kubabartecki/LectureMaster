@@ -1,9 +1,6 @@
 package com.bartheme.quiz.controller;
 
-import com.bartheme.quiz.model.QuestionLatent;
-import com.bartheme.quiz.model.QuestionResponse;
-import com.bartheme.quiz.model.Quiz;
-import com.bartheme.quiz.model.QuizDto;
+import com.bartheme.quiz.model.*;
 import com.bartheme.quiz.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +17,8 @@ public class QuizController {
 
     @PreAuthorize("hasAuthority('lecture:write')")
     @PostMapping("create")
-    public ResponseEntity<Quiz> createQuiz(@RequestBody QuizDto quizDto) {
-        return quizService.createQuiz(quizDto.getTitle(), quizDto.getCategoryName(), quizDto.getNumQuestions());
+    public ResponseEntity<Quiz> createQuiz(@RequestBody QuizCreateDto quizCreateDto) {
+        return quizService.createQuiz(quizCreateDto.getTitle(), quizCreateDto.getCategoryName(), quizCreateDto.getNumQuestions());
     }
 
     @PreAuthorize("hasAuthority('student:read')")
@@ -34,5 +31,19 @@ public class QuizController {
     @PostMapping("submit/{quizId}")
     public ResponseEntity<Integer> scoreQuiz(@RequestBody List<QuestionResponse> responses, @PathVariable Integer quizId) {
         return quizService.scoreQuiz(responses, quizId);
+    }
+
+    @PreAuthorize("hasAuthority('student:read')")
+    @GetMapping("all")
+    public ResponseEntity<List<QuizDto>> getAllQuizDto(){
+        List<QuizDto> quizDtoList = quizService.getAllQuizDto();
+        return ResponseEntity.ok().body(quizDtoList);
+    }
+
+    @PreAuthorize("hasAuthority('lecture:write')")
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteQuiz(@PathVariable Integer id){
+        quizService.deleteQuiz(id);
+        return ResponseEntity.ok("Quiz deleted");
     }
 }

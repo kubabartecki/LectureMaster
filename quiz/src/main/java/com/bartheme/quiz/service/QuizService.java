@@ -80,4 +80,15 @@ public class QuizService {
         quizResultPublisherService.publish(quizResultNotification);
         return scoreResponse;
     }
+
+    public List<QuizDto> getAllQuizDto() {
+        List<Quiz> quizList = quizRepository.findAll();
+        return quizList.stream()
+                .map(QuizDto::new)
+                .toList();
+    }
+
+    public void deleteQuiz(Integer id) {
+        quizRepository.deleteById(id);
+    }
 }
