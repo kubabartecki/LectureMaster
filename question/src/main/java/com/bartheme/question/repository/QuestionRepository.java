@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Set;
 
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
@@ -12,4 +13,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
     @Query(value = "SELECT q.id FROM question q WHERE q.category=:category ORDER BY RANDOM() LIMIT :count", nativeQuery = true)
     List<Integer> findRandomQuestionIdsByCategory(String category, int count);
+
+    @Query("SELECT q.category FROM Question q")
+    Set<String> findAllCategories();
 }

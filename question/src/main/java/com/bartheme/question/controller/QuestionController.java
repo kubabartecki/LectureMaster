@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/question")
@@ -33,6 +34,12 @@ public class QuestionController {
     @PostMapping
     public ResponseEntity<String> addQuestion(@RequestBody Question question) {
         return questionService.addQuestion(question);
+    }
+
+    @PreAuthorize("hasAnyAuthority('lecture:write')")
+    @GetMapping("category/all")
+    public ResponseEntity<Set<String>> getAllCategories() {
+        return ResponseEntity.ok(questionService.getAllCategories());
     }
 
     // for quiz microservice
