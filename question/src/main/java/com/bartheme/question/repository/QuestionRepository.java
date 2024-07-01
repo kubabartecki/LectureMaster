@@ -16,4 +16,6 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
     @Query("SELECT q.category FROM Question q")
     Set<String> findAllCategories();
+
+    boolean existsQuestionByDescription(String description);
 }

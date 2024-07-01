@@ -5,6 +5,7 @@ import com.bartheme.question.model.QuestionLatent;
 import com.bartheme.question.model.QuestionResponse;
 import com.bartheme.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class QuestionController {
     @PreAuthorize("hasAuthority('lecture:read')")
     @GetMapping
     public ResponseEntity<List<Question>> getAllQuestions() {
-        return questionService.getAllQuestions();
+        return new ResponseEntity<>(questionService.getAllQuestions(), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('lecture:read')")
@@ -33,7 +34,7 @@ public class QuestionController {
     @PreAuthorize("hasAuthority('lecture:write')")
     @PostMapping
     public ResponseEntity<String> addQuestion(@RequestBody Question question) {
-        return questionService.addQuestion(question);
+        return ResponseEntity.ok(questionService.addQuestion(question));
     }
 
     @PreAuthorize("hasAnyAuthority('lecture:write')")

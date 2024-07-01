@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,8 @@ import java.util.Set;
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
-    public ResponseEntity<List<Question>> getAllQuestions() {
-        try {
-            return new ResponseEntity<>(questionRepository.findAll(), HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+    public List<Question> getAllQuestions() {
+        return questionRepository.findAll();
     }
 
     public ResponseEntity<List<Question>> getQuestionsByCategory(String category) {
@@ -36,9 +32,12 @@ public class QuestionService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<String> addQuestion(Question question) {
+    public String addQuestion(Question question) {
+        if (questionRepository.existsQuestionByDescription(question.getDescription())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Description already exists");
+        }
         questionRepository.save(question);
-        return new ResponseEntity<>("Question added", HttpStatus.CREATED);
+        return "Question added";
     }
 
     public ResponseEntity<List<Integer>> generateQuestionsForQuiz(String category, Integer numQuestions) {
